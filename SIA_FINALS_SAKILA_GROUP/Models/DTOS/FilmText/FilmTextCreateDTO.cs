@@ -1,6 +1,6 @@
 ﻿namespace SIA_FINALS_SAKILA_GROUP.Models.DTOS.FilmText
 {
-    public class FilmTextRead
+    public class FilmTextCreateDTO
     {
         public short FilmId { get; set; }
 
