@@ -9,11 +9,11 @@ namespace SIA_FINALS_SAKILA_GROUP.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FilmActorsRepository : BaseController<FilmActor, FilmActorReadDTO, FilmActorCreateDTO, FilmActorUpdateDTO>
+    public class FilmActorsController : BaseController<FilmActor, FilmActorReadDTO, FilmActorCreateDTO, FilmActorUpdateDTO>
     {
         private readonly IFilmActorRepository _filmActorRepo;
 
-        public FilmActorsRepository(IFilmActorRepository repo, IMapper mapper ) : base (repo, mapper)
+        public FilmActorsController(IFilmActorRepository repo, IMapper mapper ) : base (repo, mapper)
         {
             _filmActorRepo = repo;
         }
