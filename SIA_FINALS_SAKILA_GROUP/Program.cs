@@ -38,6 +38,17 @@ builder.Services.AddScoped<IRentalRepository, RentalRepository>();
 builder.Services.AddScoped<IStaffRepository, StaffRepository>();
 builder.Services.AddScoped<IStoreRepository, StoreRepository>();
 
+//Add CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowUI",
+        policy => policy
+            .WithOrigins("https://localhost:7009")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -48,6 +59,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowUI");
 
 app.UseAuthorization();
 
