@@ -9,7 +9,7 @@ namespace SIA_FINALS_SAKILA_GROUP.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoriesController : BaseController<Category, CategoryCreateDTO, CategoryReadDTO, CategoryUpdateDTO>
+    public class CategoriesController : BaseController<Category, CategoryReadDTO, CategoryCreateDTO, CategoryUpdateDTO>
     {
         private readonly ICategoryRepository _categoryrepo;
 

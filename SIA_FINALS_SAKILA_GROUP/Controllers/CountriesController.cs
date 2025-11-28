@@ -9,7 +9,7 @@ namespace SIA_FINALS_SAKILA_GROUP.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CountriesController : BaseController<Country, CountryCreateDTO, CountryReadDTO, CountryUpdateDTO>
+    public class CountriesController : BaseController<Country, CountryReadDTO, CountryCreateDTO, CountryUpdateDTO>
     {
         private readonly ICountryRepository _countryrepo;
 

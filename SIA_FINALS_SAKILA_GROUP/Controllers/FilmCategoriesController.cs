@@ -10,7 +10,7 @@ namespace SIA_FINALS_SAKILA_GROUP.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FilmCategoriesController : BaseController<FilmCategory, FilmCategoryCreateDTO, FilmCategoryReadDTO, FilmCategoryUpdateDTO>
+    public class FilmCategoriesController : BaseController<FilmCategory, FilmCategoryReadDTO, FilmCategoryCreateDTO, FilmCategoryUpdateDTO>
     {
         private readonly IFilmCategoryRepository _filmCategoryRepo;
 

@@ -1,6 +1,6 @@
 ﻿namespace SIA_FINALS_SAKILA_GROUP.Models.DTOS.Customer
 {
-    public class CusomterCreateDTO
+    public class CustomerCreateDTO
     {
         public int StoreId { get; set; }
 

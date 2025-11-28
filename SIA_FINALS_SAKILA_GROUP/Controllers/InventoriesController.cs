@@ -9,7 +9,7 @@ namespace SIA_FINALS_SAKILA_GROUP.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class InventoriesController : BaseController<Inventory, InventoryCreateDTO, InventoryReadDTO, InventoryUpdateDTO>
+    public class InventoriesController : BaseController<Inventory, InventoryReadDTO, InventoryCreateDTO, InventoryUpdateDTO>
     {
         private readonly IInventoryRepository _inventoryRepo;
 

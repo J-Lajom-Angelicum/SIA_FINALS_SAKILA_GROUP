@@ -9,7 +9,7 @@ namespace SIA_FINALS_SAKILA_GROUP.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomersController : BaseController<Customer, CusomterCreateDTO, CustomerUpdateDTO, CustomerReadDTO>
+    public class CustomersController : BaseController<Customer, CustomerReadDTO, CustomerCreateDTO, CustomerUpdateDTO>
     {
         private readonly ICustomerRepository _customerRepo;
 

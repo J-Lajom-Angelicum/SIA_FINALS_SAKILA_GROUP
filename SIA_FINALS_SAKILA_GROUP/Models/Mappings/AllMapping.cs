@@ -27,7 +27,7 @@ namespace SIA_FINALS_SAKILA_GROUP.Models.Mappings
 
             // Customer Mappings
             CreateMap<Customer, CustomerReadDTO>();
-            CreateMap<CusomterCreateDTO, Customer>();
+            CreateMap<CusstomerCreateDTO, Customer>();
             CreateMap<CustomerUpdateDTO, Customer>();
 
             //Actor Mappings
@@ -62,7 +62,7 @@ namespace SIA_FINALS_SAKILA_GROUP.Models.Mappings
 
             //Customer Mappings
             CreateMap<Customer, CustomerReadDTO>();
-            CreateMap<CusomterCreateDTO, Customer>();
+            CreateMap<CusstomerCreateDTO, Customer>();
             CreateMap<CustomerUpdateDTO, Customer>();
 
             //FilmCategory Mappings
