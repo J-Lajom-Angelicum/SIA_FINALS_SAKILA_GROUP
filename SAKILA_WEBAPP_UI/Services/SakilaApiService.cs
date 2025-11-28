@@ -131,5 +131,44 @@ namespace SAKILA_WEBAPP_UI.Services
             return films;
         }
 
+        // --- Merge Rentals with Film, Customer, and Staff info ---
+        public async Task<List<Rental>> GetRentalsWithDetailsAsync()
+        {
+            // 1. Get base data
+            var rentals = await GetRentalsAsync();
+            var inventories = await GetInventoriesAsync();
+            var films = await GetFilmsAsync();
+            var customers = await GetCustomersAsync();
+            var staffMembers = await GetStaffAsync();
+
+            // 2. Merge data
+            foreach (var rental in rentals)
+            {
+                // Film via inventory
+                var inventory = inventories.FirstOrDefault(i => i.inventoryId == rental.inventoryId);
+                var film = inventory != null ? films.FirstOrDefault(f => f.filmId == inventory.filmId) : null;
+
+                if (film != null)
+                {
+                    rental.title = film.title;
+                    rental.rentalDuration = film.rentalDuration;
+                    rental.rentalRate = film.rentalRate;
+                    rental.replacementCost = film.replacementCost;
+                }
+
+                // Customer full name
+                var customer = customers.FirstOrDefault(c => c.customerId == rental.customerId);
+                rental.customerName = customer != null ? $"{customer.firstName} {customer.lastName}" : "-";
+
+                // Staff full name
+                var staff = staffMembers.FirstOrDefault(s => s.staffId == rental.staffId);
+                rental.staffName = staff != null ? $"{staff.firstName} {staff.lastName}" : "-";
+            }
+
+            return rentals;
+        }
+
+
+
     }
 }

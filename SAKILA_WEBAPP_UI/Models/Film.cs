@@ -8,7 +8,7 @@ namespace SAKILA_WEBAPP_UI.Models
         public int filmId { get; set; }
 
         [JsonPropertyName("title")]
-        public string Title { get; set; }
+        public string title { get; set; }
 
         [JsonPropertyName("description")]
         public string Description { get; set; }
@@ -23,16 +23,16 @@ namespace SAKILA_WEBAPP_UI.Models
         public byte? OriginalLanguageId { get; set; }
 
         [JsonPropertyName("rentalDuration")]
-        public byte RentalDuration { get; set; }
+        public byte rentalDuration { get; set; }
 
         [JsonPropertyName("rentalRate")]
-        public decimal RentalRate { get; set; }
+        public decimal rentalRate { get; set; }
 
         [JsonPropertyName("length")]
         public short? Length { get; set; }
 
         [JsonPropertyName("replacementCost")]
-        public decimal ReplacementCost { get; set; }
+        public decimal replacementCost { get; set; }
 
         [JsonPropertyName("rating")]
         public string Rating { get; set; }

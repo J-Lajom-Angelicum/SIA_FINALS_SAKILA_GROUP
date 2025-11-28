@@ -26,7 +26,7 @@ namespace SAKILA_WEBAPP_UI.Controllers
                 string s = searchTerm.ToLower();
 
                 films = films.Where(f =>
-                    (f.Title?.ToLower().Contains(s) ?? false) ||
+                    (f.title?.ToLower().Contains(s) ?? false) ||
                     (f.Description?.ToLower().Contains(s) ?? false) ||
                     (f.ReleaseYear?.ToLower().Contains(s) ?? false) ||
                     (f.Rating?.ToLower().Contains(s) ?? false) ||
@@ -42,11 +42,11 @@ namespace SAKILA_WEBAPP_UI.Controllers
             switch (sortOrder)
             {
                 case "title_asc":
-                    films = films.OrderBy(f => f.Title).ToList();
+                    films = films.OrderBy(f => f.title).ToList();
                     break;
 
                 case "title_desc":
-                    films = films.OrderByDescending(f => f.Title).ToList();
+                    films = films.OrderByDescending(f => f.title).ToList();
                     break;
 
                 case "year_asc":

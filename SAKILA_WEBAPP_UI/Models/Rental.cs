@@ -1,4 +1,6 @@
-﻿namespace SAKILA_WEBAPP_UI.Models
+﻿using System.Text.Json.Serialization;
+
+namespace SAKILA_WEBAPP_UI.Models
 {
     public class Rental
     {
@@ -7,7 +9,8 @@
         public int customerId { get; set; }
         public int staffId { get; set; }
 
-        public string filmTitle { get; set; }
+        [JsonPropertyName("title")]
+        public string title { get; set; }
         public byte rentalDuration { get; set; }
         public decimal rentalRate { get; set; }
         public decimal replacementCost { get; set; }

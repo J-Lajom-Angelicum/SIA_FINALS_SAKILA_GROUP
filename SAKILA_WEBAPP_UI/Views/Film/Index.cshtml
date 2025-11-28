@@ -36,7 +36,7 @@
         @foreach (var f in Model)
         {
             <tr>
-                <td>@f.Title</td>
+                <td>@f.title</td>
                 <td>@f.Description</td>
                 <td>@f.ReleaseYear</td>
                 <td>@(f.Length.HasValue? f.Length.Value + " mins" : "-")</td>
@@ -67,7 +67,7 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Are you sure you want to delete "<strong>@f.Title</strong>"?
+                    Are you sure you want to delete "<strong>@f.title</strong>"?
                 </div>
                 <div class="modal-footer border-top border-danger">
                     <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancel</button>

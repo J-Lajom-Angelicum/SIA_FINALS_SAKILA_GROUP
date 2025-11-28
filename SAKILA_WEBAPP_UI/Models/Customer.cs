@@ -8,8 +8,8 @@ namespace SAKILA_WEBAPP_UI.Models
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string email { get; set; }
-        public bool active { get; set; }
-        public string address { get; set; }
-        public string store { get; set; }
+        public string active { get; set; }
+        public string addressId { get; set; }
+        public string storeId { get; set; }
     }
 }
