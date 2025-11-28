@@ -9,7 +9,7 @@ namespace SIA_FINALS_SAKILA_GROUP.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FilmTextsController : BaseController<FilmText, FilmTextCreateDTO, FilmTextReadDTO, FilmTextUpdateDTO>
+    public class FilmTextsController : BaseController<FilmText,FilmTextReadDTO, FilmTextCreateDTO, FilmTextUpdateDTO>
     {
         private readonly IFilmTextRepository _filmTextRepository;
 
