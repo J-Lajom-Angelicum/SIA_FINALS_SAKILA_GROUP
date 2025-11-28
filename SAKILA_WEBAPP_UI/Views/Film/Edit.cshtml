@@ -1,0 +1,86 @@
+﻿@model Film
+
+<h2 style="color:white; text-align:center; margin-bottom:30px;">Edit Film</h2>
+
+<form asp-action="Edit" method="post" class="mx-auto" style="max-width:600px;">
+    @* Hidden field to keep FilmId *@
+    <input type="hidden" asp-for="filmId" />
+
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label text-white">Title</label>
+        <input asp-for="Title" class="form-control bg-dark text-white border-danger" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label text-white">Description</label>
+        <textarea asp-for="Description" class="form-control bg-dark text-white border-danger"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ReleaseYear" class="form-label text-white">Release Year</label>
+        <input asp-for="ReleaseYear" class="form-control bg-dark text-white border-danger" />
+        <span asp-validation-for="ReleaseYear" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Length" class="form-label text-white">Length (mins)</label>
+        <input asp-for="Length" class="form-control bg-dark text-white border-danger" />
+        <span asp-validation-for="Length" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Rating" class="form-label text-white">Rating</label>
+        <input asp-for="Rating" class="form-control bg-dark text-white border-danger" />
+        <span asp-validation-for="Rating" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="LanguageName" class="form-label text-white">Language</label>
+        <input asp-for="LanguageName" class="form-control bg-dark text-white border-danger" />
+        <span asp-validation-for="LanguageName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="SpecialFeatures" class="form-label text-white">Special Features</label>
+        <input asp-for="SpecialFeatures" class="form-control bg-dark text-white border-danger" />
+        <span asp-validation-for="SpecialFeatures" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Categories" class="form-label text-white">Categories (comma-separated)</label>
+        <input asp-for="Categories" class="form-control bg-dark text-white border-danger" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Actors" class="form-label text-white">Actors (comma-separated)</label>
+        <input asp-for="Actors" class="form-control bg-dark text-white border-danger" />
+    </div>
+
+    <button type="submit" class="btn btn-danger w-100">Save Changes</button>
+    <a asp-action="Index" class="btn btn-outline-light w-100 mt-2">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    body {
+        background-color: #111;
+        color: #fff;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    h2 {
+        color: #e50914;
+        text-align: center;
+    }
+
+    .form-control.bg-dark {
+        background-color: #222 !important;
+        color: #fff !important;
+        border: 1px solid #e50914 !important;
+    }
+</style>

@@ -106,7 +106,7 @@ namespace SAKILA_WEBAPP_UI.Controllers
         {
             if (!ModelState.IsValid) return View(film);
 
-            await _api.PutAsync($"api/Films/{film.FilmId}", film);
+            await _api.PutAsync($"api/Films/{film.filmId}", film);
             return RedirectToAction(nameof(Index));
         }
 

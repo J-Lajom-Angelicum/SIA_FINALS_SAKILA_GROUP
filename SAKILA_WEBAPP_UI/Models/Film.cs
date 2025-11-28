@@ -4,8 +4,8 @@ namespace SAKILA_WEBAPP_UI.Models
 {
     public class Film
     {
-        [JsonPropertyName("film_id")]
-        public int FilmId { get; set; }
+        [JsonPropertyName("filmId")]
+        public int filmId { get; set; }
 
         [JsonPropertyName("title")]
         public string Title { get; set; }
@@ -16,28 +16,28 @@ namespace SAKILA_WEBAPP_UI.Models
         [JsonPropertyName("releaseYear")]
         public string ReleaseYear { get; set; } = "";
 
-        [JsonPropertyName("language_id")]
+        [JsonPropertyName("languageId")]
         public byte LanguageId { get; set; }
 
         [JsonPropertyName("original_language_id")]
         public byte? OriginalLanguageId { get; set; }
 
-        [JsonPropertyName("rental_duration")]
+        [JsonPropertyName("rentalDuration")]
         public byte RentalDuration { get; set; }
 
-        [JsonPropertyName("rental_rate")]
+        [JsonPropertyName("rentalRate")]
         public decimal RentalRate { get; set; }
 
         [JsonPropertyName("length")]
         public short? Length { get; set; }
 
-        [JsonPropertyName("replacement_cost")]
+        [JsonPropertyName("replacementCost")]
         public decimal ReplacementCost { get; set; }
 
         [JsonPropertyName("rating")]
         public string Rating { get; set; }
 
-        [JsonPropertyName("special_features")]
+        [JsonPropertyName("specialFeatures")]
         public string SpecialFeatures { get; set; }
 
         [JsonPropertyName("last_update")]

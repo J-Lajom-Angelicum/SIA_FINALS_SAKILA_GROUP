@@ -2,14 +2,19 @@
 {
     public class Rental
     {
-        public int RentalId { get; set; }
-        public int InventoryId { get; set; }
-        public int CustomerId { get; set; }
-        public int StaffId { get; set; }
-        public string FilmTitle { get; set; }
-        public string CustomerName { get; set; }
-        public string StaffName { get; set; }
-        public DateTime RentalDate { get; set; }
-        public DateTime? ReturnDate { get; set; }
+        public int rentalId { get; set; }
+        public int inventoryId { get; set; }
+        public int customerId { get; set; }
+        public int staffId { get; set; }
+
+        public string filmTitle { get; set; }
+        public byte rentalDuration { get; set; }
+        public decimal rentalRate { get; set; }
+        public decimal replacementCost { get; set; }
+
+        public string customerName { get; set; }
+        public string staffName { get; set; }
+        public DateTime rentalDate { get; set; }
+        public DateTime? returnDate { get; set; }
     }
 }

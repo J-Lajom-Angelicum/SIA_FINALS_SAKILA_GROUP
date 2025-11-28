@@ -4,7 +4,7 @@ namespace SAKILA_WEBAPP_UI.Models
 {
     public class Language
     {
-        [JsonPropertyName("language_id")]
+        [JsonPropertyName("languageId")]
         public byte LanguageId { get; set; }
 
         [JsonPropertyName("name")]

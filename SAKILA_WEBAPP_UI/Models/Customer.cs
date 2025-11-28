@@ -1,12 +1,15 @@
-﻿namespace SAKILA_WEBAPP_UI.Models
+﻿using System.Text.Json.Serialization;
+
+namespace SAKILA_WEBAPP_UI.Models
 {
     public class Customer
     {
-        public int CustomerId { get; set; }
-        public string FullName { get; set; }
-        public string Email { get; set; }
-        public bool Active { get; set; }
-        public string Address { get; set; }
-        public string Store { get; set; }
+        public int customerId { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public string email { get; set; }
+        public bool active { get; set; }
+        public string address { get; set; }
+        public string store { get; set; }
     }
 }

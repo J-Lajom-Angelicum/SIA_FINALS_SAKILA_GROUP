@@ -26,6 +26,7 @@
             <th>Length</th>
             <th>Rating</th>
             <th>Language</th>
+            <th>Special Features</th>
             <th>Category</th>
             <th>Actors</th>
             <th>Actions</th>
@@ -41,13 +42,13 @@
                 <td>@(f.Length.HasValue? f.Length.Value + " mins" : "-")</td>
                 <td>@f.Rating</td>
                 <td>@f.LanguageName</td>
+                <td>@f.SpecialFeatures</td>
                 <td>@(f.Categories.Any() ? string.Join(", ", f.Categories) : "-")</td>
                 <td>@(f.Actors.Any() ? string.Join(", ", f.Actors) : "-")</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@f.FilmId" class="btn btn-sm btn-outline-light mb-1">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@f.FilmId" class="btn btn-sm btn-outline-danger mb-1">Delete</a>
-                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#detailsModal@f.FilmId">
-                        Details
+                    <a asp-action="Edit" asp-route-id="@f.filmId" class="btn btn-sm btn-outline-light mb-1">Edit</a>
+                    <button type="button" class="btn btn-sm btn-outline-danger mb-1" data-bs-toggle="modal" data-bs-target="#deleteModal@f.FilmId">
+                        Delete
                     </button>
                 </td>
             </tr>
@@ -55,24 +56,22 @@
     </tbody>
 </table>
 
-<!-- Modals outside the table -->
+<!-- Delete Confirmation Modals -->
 @foreach (var f in Model)
 {
-    <div class="modal fade" id="detailsModal@f.FilmId" tabindex="-1" aria-labelledby="detailsLabel@f.FilmId" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal fade" id="deleteModal@f.FilmId" tabindex="-1" aria-labelledby="deleteLabel@f.FilmId" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content bg-dark text-white">
                 <div class="modal-header border-bottom border-danger">
-                    <h5 class="modal-title" id="detailsLabel@f.FilmId">@f.Title Details</h5>
+                    <h5 class="modal-title" id="deleteLabel@f.FilmId">Confirm Delete</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p><strong>Rental Duration:</strong> @f.RentalDuration days</p>
-                    <p><strong>Rental Rate:</strong> @f.RentalRate</p>
-                    <p><strong>Replacement Cost:</strong> @f.ReplacementCost</p>
-                    <p><strong>Special Features:</strong> @f.SpecialFeatures</p>
+                    Are you sure you want to delete "<strong>@f.Title</strong>"?
                 </div>
                 <div class="modal-footer border-top border-danger">
-                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancel</button>
+                    <a asp-action="Delete" asp-route-id="@f.filmId" class="btn btn-danger">Delete</a>
                 </div>
             </div>
         </div>

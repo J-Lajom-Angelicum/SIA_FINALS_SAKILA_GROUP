@@ -49,6 +49,28 @@ namespace SAKILA_WEBAPP_UI.Services
         public Task<List<Category>> GetCategoriesAsync() => GetListAsync<Category>("api/Categories");
         public Task<List<FilmCategory>> GetFilmCategoriesAsync() => GetListAsync<FilmCategory>("api/FilmCategories");
 
+        // --- Rental helper methods ---
+
+        // Rentals
+        public Task<Rental?> GetRentalByIdAsync(int rentalId) =>
+            GetSingleAsync<Rental>($"api/Rentals/{rentalId}");
+
+        // Film via InventoryId
+        public async Task<Film?> GetFilmByInventoryIdAsync(int inventoryId)
+        {
+            var inventories = await GetInventoriesAsync();
+            var inventory = inventories.FirstOrDefault(i => i.inventoryId == inventoryId);
+            if (inventory == null) return null;
+            return await GetFilmAsync(inventory.filmId);
+        }
+
+        // Get all customers
+        public Task<List<Customer>> GetCustomersAsync() => GetListAsync<Customer>("api/Customers");
+
+        // Get all staff
+        public Task<List<Staff>> GetStaffAsync() => GetListAsync<Staff>("api/Staff");
+
+
         // --- Compute TotalCopies and AvailableCopies ---
         public async Task<List<Film>> GetFilmsWithAvailabilityAsync()
         {
@@ -58,9 +80,9 @@ namespace SAKILA_WEBAPP_UI.Services
 
             foreach (var film in films)
             {
-                var filmInventories = inventories.Where(i => i.FilmId == film.FilmId).ToList();
+                var filmInventories = inventories.Where(i => i.filmId == film.filmId).ToList();
                 film.TotalCopies = filmInventories.Count;
-                film.AvailableCopies = filmInventories.Count(i => !rentals.Any(r => r.InventoryId == i.InventoryId && r.ReturnDate == null));
+                film.AvailableCopies = filmInventories.Count(i => !rentals.Any(r => r.inventoryId == i.inventoryId && r.returnDate == null));
             }
 
             return films;
@@ -71,7 +93,6 @@ namespace SAKILA_WEBAPP_UI.Services
         {
             var films = await GetFilmsWithAvailabilityAsync();
 
-            // fetch related data
             var languages = await GetLanguagesAsync();
             var actors = await GetActorsAsync();
             var filmActors = await GetFilmActorsAsync();
@@ -86,8 +107,8 @@ namespace SAKILA_WEBAPP_UI.Services
 
                 // Actors
                 var actorIds = filmActors
-                                .Where(fa => fa.filmId == film.FilmId)
-                                .Select(fa => fa.actorId) // <- use the correct JSON field from backend
+                                .Where(fa => fa.filmId == film.filmId)
+                                .Select(fa => fa.actorId)
                                 .ToHashSet();
 
                 film.Actors = actors
@@ -97,7 +118,7 @@ namespace SAKILA_WEBAPP_UI.Services
 
                 // Categories
                 var categoryIds = filmCategories
-                                    .Where(fc => fc.filmId == film.FilmId)
+                                    .Where(fc => fc.filmId == film.filmId)
                                     .Select(fc => fc.categoryId)
                                     .ToHashSet();
 
