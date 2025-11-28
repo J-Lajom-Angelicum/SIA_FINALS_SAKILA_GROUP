@@ -9,6 +9,9 @@ builder.Services.AddHttpClient("SakilaAPI", client =>
     client.BaseAddress = new Uri("https://localhost:7290/");
 });
 
+// Register your service for DI
+builder.Services.AddScoped<SAKILA_WEBAPP_UI.Services.SakilaApiService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
