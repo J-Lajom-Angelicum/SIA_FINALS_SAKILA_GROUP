@@ -80,32 +80,35 @@ namespace SAKILA_WEBAPP_UI.Services
 
             foreach (var film in films)
             {
-                // --- Language ---
+                // Language
                 var language = languages.FirstOrDefault(l => l.LanguageId == film.LanguageId);
-                film.LanguageName = language != null ? language.Name : "-";
+                film.LanguageName = language?.Name?.Trim() ?? "-";
 
-                // --- Actors ---
+                // Actors
                 var actorIds = filmActors
-                                .Where(fa => fa.FilmId == film.FilmId)
-                                .Select(fa => fa.ActorId)
-                                .ToHashSet(); // safer Contains
+                                .Where(fa => fa.filmId == film.FilmId)
+                                .Select(fa => fa.actorId) // <- use the correct JSON field from backend
+                                .ToHashSet();
+
                 film.Actors = actors
-                                .Where(a => actorIds.Contains(a.ActorId))
-                                .Select(a => $"{a.FirstName} {a.LastName}")
+                                .Where(a => actorIds.Contains(a.actorId))
+                                .Select(a => $"{a.firstName} {a.lastName}")
                                 .ToList();
 
-                // --- Categories ---
+                // Categories
                 var categoryIds = filmCategories
-                                    .Where(fc => fc.FilmId == film.FilmId)
-                                    .Select(fc => fc.CategoryId)
+                                    .Where(fc => fc.filmId == film.FilmId)
+                                    .Select(fc => fc.categoryId)
                                     .ToHashSet();
+
                 film.Categories = categories
-                                    .Where(c => categoryIds.Contains(c.CategoryId))
-                                    .Select(c => c.Name)
+                                    .Where(c => categoryIds.Contains(c.categoryId))
+                                    .Select(c => c.name.Trim())
                                     .ToList();
             }
 
             return films;
         }
+
     }
 }

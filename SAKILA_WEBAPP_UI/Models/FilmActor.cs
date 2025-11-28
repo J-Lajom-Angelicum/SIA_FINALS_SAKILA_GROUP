@@ -4,13 +4,14 @@ namespace SAKILA_WEBAPP_UI.Models
 {
     public class FilmActor
     {
-        [JsonPropertyName("film_id")]
-        public int FilmId { get; set; }
+        
+        [JsonPropertyName("actorId")]
+        public int actorId { get; set; }
 
-        [JsonPropertyName("actor_id")]
-        public int ActorId { get; set; }
+        [JsonPropertyName("filmId")]
+        public int filmId { get; set; }
 
-        [JsonPropertyName("last_update")]
+        [JsonPropertyName("lastUpdate")]
         public DateTime LastUpdate { get; set; }
     }
 }
