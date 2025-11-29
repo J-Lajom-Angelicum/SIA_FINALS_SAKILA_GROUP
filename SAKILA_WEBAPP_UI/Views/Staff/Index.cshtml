@@ -1,11 +1,11 @@
-﻿@model List<SAKILA_WEBAPP_UI.Models.Customer>
+﻿@model List<SAKILA_WEBAPP_UI.Models.Staff>
 
 <a asp-controller="Home" asp-action="Index">
     <img src="~/Images/srlogo.png" alt="Sakila Logo" style="height:90px;" />
 </a>
 
 @{
-    ViewData["Title"] = "Customers";
+    ViewData["Title"] = "Staff";
     var currentSortColumn = ViewData["CurrentSortColumn"] as string ?? "firstName";
     var currentSortDirection = ViewData["CurrentSortDirection"] as string ?? "asc";
     var currentFilter = ViewData["CurrentFilter"] as string ?? "";
@@ -19,12 +19,11 @@
         "city" => "City",
         "country" => "Country",
         "storeId" => "Store ID",
-        "active" => "Active",
         _ => "Search..."
     };
 }
 
-<h2>Customers</h2>
+<h2>Staff</h2>
 
 <form method="get" asp-action="Index" class="d-flex gap-2 mb-3 justify-content-center flex-column flex-sm-row">
     <input type="text" name="searchTerm" value="@currentFilter" class="form-control w-100 w-sm-50 search-input" placeholder="Search in @placeholderText..." />
@@ -38,6 +37,7 @@
         {
             <option value="firstName">First Name</option>
         }
+
         @if (currentSortColumn == "lastName")
         {
             <option value="lastName" selected>Last Name</option>
@@ -46,6 +46,7 @@
         {
             <option value="lastName">Last Name</option>
         }
+
         @if (currentSortColumn == "email")
         {
             <option value="email" selected>Email</option>
@@ -54,6 +55,7 @@
         {
             <option value="email">Email</option>
         }
+
         @if (currentSortColumn == "address")
         {
             <option value="address" selected>Address</option>
@@ -62,6 +64,7 @@
         {
             <option value="address">Address</option>
         }
+
         @if (currentSortColumn == "city")
         {
             <option value="city" selected>City</option>
@@ -70,6 +73,7 @@
         {
             <option value="city">City</option>
         }
+
         @if (currentSortColumn == "country")
         {
             <option value="country" selected>Country</option>
@@ -78,6 +82,7 @@
         {
             <option value="country">Country</option>
         }
+
         @if (currentSortColumn == "storeId")
         {
             <option value="storeId" selected>Store ID</option>
@@ -85,14 +90,6 @@
         else
         {
             <option value="storeId">Store ID</option>
-        }
-        @if (currentSortColumn == "active")
-        {
-            <option value="active" selected>Active</option>
-        }
-        else
-        {
-            <option value="active">Active</option>
         }
     </select>
 
@@ -105,6 +102,7 @@
         {
             <option value="asc">Ascending</option>
         }
+
         @if (currentSortDirection == "desc")
         {
             <option value="desc" selected>Descending</option>
@@ -114,6 +112,7 @@
             <option value="desc">Descending</option>
         }
     </select>
+
 
     <button type="submit" class="btn btn-primary mt-2 mt-sm-0">Apply</button>
 </form>
@@ -130,68 +129,67 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var customer in Model)
+        @foreach (var staff in Model)
         {
             <tr>
-                <td>@customer.firstName</td>
-                <td>@customer.lastName</td>
-                <td>@customer.email</td>
-                <td>@(customer.active == "1" ? "Yes" : "No")</td>
-                <td>@customer.storeId</td>
-                <td>@(customer.Address != null ? $"{customer.Address.address1}, {customer.Address.City?.city1}, {customer.Address.City?.Country?.country1}" : "-")</td>
+                <td>@staff.firstName</td>
+                <td>@staff.lastName</td>
+                <td>@staff.email</td>
+                <td>@(staff.active ? "Yes" : "No")</td>
+                <td>@staff.storeId</td>
+                <td>@(staff.Address != null ? $"{staff.Address.address1}, {staff.Address.City?.city1}, {staff.Address.City?.Country?.country1}" : "-")</td>
             </tr>
         }
     </tbody>
 </table>
+// <style>
+//     body {
+//         background-color: #111;
+//         color: #fff;
+//         font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+//     }
 
-<style>
-    body {
-        background-color: #111;
-        color: #fff;
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
+//     h2 {
+//         color: #e50914;
+//         text-align: center;
+//         margin-bottom: 20px;
+//     }
 
-    h2 {
-        color: #e50914;
-        text-align: center;
-        margin-bottom: 20px;
-    }
+//     .table-netflix {
+//         background-color: #1c1c1c;
+//         border: 2px solid #fff;
+//     }
 
-    .table-netflix {
-        background-color: #1c1c1c;
-        border: 2px solid #fff;
-    }
+//         .table-netflix th, .table-netflix td {
+//             border: 1px solid #fff;
+//             text-align: center;
+//             vertical-align: middle;
+//             color: #fff;
+//         }
 
-        .table-netflix th, .table-netflix td {
-            border: 1px solid #fff;
-            text-align: center;
-            vertical-align: middle;
-            color: #fff;
-        }
+//         .table-netflix th {
+//             background-color: #111;
+//             color: #e50914;
+//         }
 
-        .table-netflix th {
-            background-color: #111;
-            color: #e50914;
-        }
+//     .search-input {
+//         background-color: #222;
+//         border: 1px solid #e50914;
+//         color: #fff;
+//     }
 
-    .search-input {
-        background-color: #222;
-        border: 1px solid #e50914;
-        color: #fff;
-    }
+//         .search-input::placeholder {
+//             color: #aaa;
+//         }
 
-        .search-input::placeholder {
-            color: #aaa;
-        }
+//     .btn-primary {
+//         background-color: #e50914;
+//         border-color: #e50914;
+//         color: #fff;
+//     }
 
-    .btn-primary {
-        background-color: #e50914;
-        border-color: #e50914;
-        color: #fff;
-    }
-
-        .btn-primary:hover {
-            background-color: #fff;
-            color: #111;
-        }
-</style>
+//         .btn-primary:hover {
+//             background-color: #fff;
+//             color: #111;
+//         }
+// </style>

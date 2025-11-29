@@ -194,7 +194,103 @@ namespace SAKILA_WEBAPP_UI.Services
         #endregion
 
         #region Staff
-        public Task<List<Staff>> GetStaffAsync() => GetListAsync<Staff>("api/Staff");
+
+        // Basic list of staff
+        public Task<List<Staff>> GetStaffAsync() => GetListAsync<Staff>("api/Staffs");
+
+        /// <summary>
+        /// Bulk-load staff with full address info (like Customer)
+        /// </summary>
+        public async Task<List<Staff>> GetStaffWithFullAddressAsync()
+        {
+            var staff = await GetListAsync<Staff>("api/Staffs");
+            var addresses = await GetListAsync<Address>("api/Addresses");
+            var cities = await GetListAsync<City>("api/Cities");
+            var countries = await GetListAsync<Country>("api/Countries");
+
+            foreach (var s in staff)
+            {
+                s.Address = addresses.FirstOrDefault(a => a.addressId == s.addressId);
+                if (s.Address != null)
+                {
+                    s.Address.City = cities.FirstOrDefault(ci => ci.cityId == s.Address.cityId);
+                    if (s.Address.City != null)
+                    {
+                        s.Address.City.Country = countries.FirstOrDefault(co => co.countryId == s.Address.City.countryId);
+                    }
+                }
+            }
+
+            return staff;
+        }
         #endregion
+
+        public async Task<List<Inventory>> GetInventoriesWithFilmAndRentalAsync()
+        {
+            var inventories = await GetListAsync<Inventory>("api/Inventory");
+
+            // Build dictionaries for fast lookups
+            var films = (await GetListAsync<Film>("api/Films"))
+                            .ToDictionary(f => f.filmId);
+            var rentals = (await GetListAsync<Rental>("api/Rentals"))
+                            .GroupBy(r => r.inventoryId)
+                            .ToDictionary(g => g.Key, g => g.OrderByDescending(r => r.rentalDate).First());
+            var customers = (await GetListAsync<Customer>("api/Customers"))
+                            .ToDictionary(c => c.customerId);
+            var staffs = (await GetListAsync<Staff>("api/Staffs"))
+                            .ToDictionary(s => s.staffId);
+
+            foreach (var inv in inventories)
+            {
+                // ✅ 1. Merge film info first
+                if (films.TryGetValue(inv.filmId, out var film))
+                {
+                    inv.title = film.title;
+                    inv.rentalDuration = film.rentalDuration;
+                    inv.rentalRate = film.rentalRate;
+                    inv.replacementCost = film.replacementCost;
+                }
+                else
+                {
+                    inv.title = "Unknown";
+                    inv.rentalDuration = 0;
+                    inv.rentalRate = 0;
+                    inv.replacementCost = 0;
+                }
+
+                // ✅ 2. Merge rental info if exists
+                if (rentals.TryGetValue(inv.inventoryId, out var rental))
+                {
+                    inv.rentalDate = rental.rentalDate;
+                    inv.returnDate = rental.returnDate;
+                    inv.isRented = rental.returnDate == null;
+
+                    inv.customerName = customers.TryGetValue(rental.customerId, out var c)
+                        ? $"{c.firstName} {c.lastName}"
+                        : "-";
+
+                    inv.staffName = staffs.TryGetValue(rental.staffId, out var s)
+                        ? $"{s.firstName} {s.lastName}"
+                        : "-";
+                }
+                else
+                {
+                    inv.rentalDate = null;
+                    inv.returnDate = null;
+                    inv.isRented = false;
+                    inv.customerName = "-";
+                    inv.staffName = "-";
+                }
+            }
+
+            return inventories;
+        }
+
+
+
+
+
+
+
     }
 }

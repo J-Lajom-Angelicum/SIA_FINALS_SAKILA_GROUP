@@ -7,9 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Inventory\" />
     <Folder Include="Views\Payment\" />
-    <Folder Include="Views\Staff\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Images\srlogo.png" />
   </ItemGroup>
 
 </Project>
