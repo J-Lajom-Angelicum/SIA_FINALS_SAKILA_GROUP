@@ -194,7 +194,38 @@ namespace SAKILA_WEBAPP_UI.Services
         #endregion
 
         #region Staff
-        public Task<List<Staff>> GetStaffAsync() => GetListAsync<Staff>("api/Staff");
+
+        // Basic list of staff
+        public Task<List<Staff>> GetStaffAsync() => GetListAsync<Staff>("api/Staffs");
+
+        /// <summary>
+        /// Bulk-load staff with full address info (like Customer)
+        /// </summary>
+        public async Task<List<Staff>> GetStaffWithFullAddressAsync()
+        {
+            var staff = await GetListAsync<Staff>("api/Staffs");
+            var addresses = await GetListAsync<Address>("api/Addresses");
+            var cities = await GetListAsync<City>("api/Cities");
+            var countries = await GetListAsync<Country>("api/Countries");
+
+            foreach (var s in staff)
+            {
+                s.Address = addresses.FirstOrDefault(a => a.addressId == s.addressId);
+                if (s.Address != null)
+                {
+                    s.Address.City = cities.FirstOrDefault(ci => ci.cityId == s.Address.cityId);
+                    if (s.Address.City != null)
+                    {
+                        s.Address.City.Country = countries.FirstOrDefault(co => co.countryId == s.Address.City.countryId);
+                    }
+                }
+            }
+
+            return staff;
+        }
+
         #endregion
+
+
     }
 }

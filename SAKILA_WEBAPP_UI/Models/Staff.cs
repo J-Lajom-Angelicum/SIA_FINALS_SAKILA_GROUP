@@ -19,5 +19,7 @@ namespace SAKILA_WEBAPP_UI.Models
         public bool active { get; set; }
 
         public string username { get; set; }
+
+        public Address Address { get; set; }
     }
 }

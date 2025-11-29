@@ -1,0 +1,191 @@
+﻿@model List<SAKILA_WEBAPP_UI.Models.Staff>
+
+@{
+    ViewData["Title"] = "Staff";
+    var currentSortColumn = ViewData["CurrentSortColumn"] as string ?? "firstName";
+    var currentSortDirection = ViewData["CurrentSortDirection"] as string ?? "asc";
+    var currentFilter = ViewData["CurrentFilter"] as string ?? "";
+
+    var placeholderText = currentSortColumn switch
+    {
+        "firstName" => "First Name",
+        "lastName" => "Last Name",
+        "email" => "Email",
+        "address" => "Address",
+        "city" => "City",
+        "country" => "Country",
+        "storeId" => "Store ID",
+        _ => "Search..."
+    };
+}
+
+<h2>Staff</h2>
+
+<form method="get" asp-action="Index" class="d-flex gap-2 mb-3 justify-content-center flex-column flex-sm-row">
+    <input type="text" name="searchTerm" value="@currentFilter" class="form-control w-100 w-sm-50 search-input" placeholder="Search in @placeholderText..." />
+
+    <select name="sortColumn" class="form-select w-100 w-sm-25 search-input">
+        @if (currentSortColumn == "firstName")
+        {
+            <option value="firstName" selected>First Name</option>
+        }
+        else
+        {
+            <option value="firstName">First Name</option>
+        }
+
+        @if (currentSortColumn == "lastName")
+        {
+            <option value="lastName" selected>Last Name</option>
+        }
+        else
+        {
+            <option value="lastName">Last Name</option>
+        }
+
+        @if (currentSortColumn == "email")
+        {
+            <option value="email" selected>Email</option>
+        }
+        else
+        {
+            <option value="email">Email</option>
+        }
+
+        @if (currentSortColumn == "address")
+        {
+            <option value="address" selected>Address</option>
+        }
+        else
+        {
+            <option value="address">Address</option>
+        }
+
+        @if (currentSortColumn == "city")
+        {
+            <option value="city" selected>City</option>
+        }
+        else
+        {
+            <option value="city">City</option>
+        }
+
+        @if (currentSortColumn == "country")
+        {
+            <option value="country" selected>Country</option>
+        }
+        else
+        {
+            <option value="country">Country</option>
+        }
+
+        @if (currentSortColumn == "storeId")
+        {
+            <option value="storeId" selected>Store ID</option>
+        }
+        else
+        {
+            <option value="storeId">Store ID</option>
+        }
+    </select>
+
+    <select name="sortDirection" class="form-select w-100 w-sm-25 search-input">
+        @if (currentSortDirection == "asc")
+        {
+            <option value="asc" selected>Ascending</option>
+        }
+        else
+        {
+            <option value="asc">Ascending</option>
+        }
+
+        @if (currentSortDirection == "desc")
+        {
+            <option value="desc" selected>Descending</option>
+        }
+        else
+        {
+            <option value="desc">Descending</option>
+        }
+    </select>
+
+
+    <button type="submit" class="btn btn-primary mt-2 mt-sm-0">Apply</button>
+</form>
+
+<table class="table table-striped table-bordered table-netflix">
+    <thead class="table-dark">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Active</th>
+            <th>Store ID</th>
+            <th>Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var staff in Model)
+        {
+            <tr>
+                <td>@staff.firstName</td>
+                <td>@staff.lastName</td>
+                <td>@staff.email</td>
+                <td>@(staff.active ? "Yes" : "No")</td>
+                <td>@staff.storeId</td>
+                <td>@(staff.Address != null ? $"{staff.Address.address1}, {staff.Address.City?.city1}, {staff.Address.City?.Country?.country1}" : "-")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<style>
+    body {
+        background-color: #111;
+        color: #fff;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    h2 {
+        color: #e50914;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .table-netflix {
+        background-color: #1c1c1c;
+        border: 2px solid #fff;
+    }
+
+        .table-netflix th, .table-netflix td {
+            border: 1px solid #fff;
+            text-align: center;
+            vertical-align: middle;
+            color: #fff;
+        }
+
+        .table-netflix th {
+            background-color: #111;
+            color: #e50914;
+        }
+
+    .search-input {
+        background-color: #222;
+        border: 1px solid #e50914;
+        color: #fff;
+    }
+
+        .search-input::placeholder {
+            color: #aaa;
+        }
+
+    .btn-primary {
+        background-color: #e50914;
+        border-color: #e50914;
+        color: #fff;
+    }
+
+        .btn-primary:hover {
+            background-color: #fff;
+            color: #111;
+        }
+</style>
