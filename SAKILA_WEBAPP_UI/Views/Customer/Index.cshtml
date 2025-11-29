@@ -11,9 +11,11 @@
 
 <!-- Search & Sort Bar -->
 <form method="get" asp-action="Index" class="d-flex gap-2 mb-3 justify-content-center flex-column flex-sm-row">
-    <input type="text" name="searchTerm" value="@currentFilter" class="form-control w-100 w-sm-50 search-input" placeholder="Search by name or email..." />
+    <!-- Search Input -->
+    <input type="text" name="searchTerm" value="@currentFilter" class="form-control w-100 w-sm-50 search-input" placeholder="Search..." />
 
-    <select name="sortColumn" class="form-select w-100 w-sm-25 search-input" asp-for="sortColumn" asp-items="null">
+    <!-- Sort Column Dropdown -->
+    <select name="sortColumn" class="form-select w-100 w-sm-25 search-input">
         <option value="">Sort by...</option>
         @if (currentSortColumn == "firstName")
         {
@@ -43,6 +45,7 @@
         }
     </select>
 
+    <!-- Sort Direction Dropdown -->
     <select name="sortDirection" class="form-select w-100 w-sm-25 search-input">
         @if (currentSortDirection == "asc")
         {
@@ -63,9 +66,9 @@
         }
     </select>
 
-
     <button type="submit" class="btn btn-primary mt-2 mt-sm-0">Apply</button>
 </form>
+
 
 <table class="table table-striped table-bordered table-netflix">
     <thead class="table-dark">
