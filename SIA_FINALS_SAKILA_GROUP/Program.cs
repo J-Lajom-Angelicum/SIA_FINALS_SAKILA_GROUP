@@ -14,7 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<sakila2021Context>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("SakilaConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SakilaConnection2")));
 
 builder.Services.AddAutoMapper(cfg =>
 {
