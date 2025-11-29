@@ -6,6 +6,10 @@
     var currentSortDirection = ViewData["CurrentSortDirection"] as string ?? "asc";
 }
 
+<a asp-controller="Home" asp-action="Index">
+    <img src="~/Images/srlogo.png" alt="Sakila Logo" style="height:90px;" />
+</a>
+
 <h2>Rentals</h2>
 
 <!-- Search Bar -->
@@ -59,59 +63,59 @@
     </tbody>
 </table>
 
-<style>
-    body {
-        background-color: #111;
-        color: #fff;
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
+// <style>
+//     body {
+//         background-color: #111;
+//         color: #fff;
+//         font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+//     }
 
-    h2 {
-        color: #e50914;
-        text-align: center;
-        margin-bottom: 20px;
-    }
+//     h2 {
+//         color: #e50914;
+//         text-align: center;
+//         margin-bottom: 20px;
+//     }
 
-    /* Netflix-style table */
-    .table-netflix {
-        background-color: #1c1c1c;
-        border: none;
-    }
+//     /* Netflix-style table */
+//     .table-netflix {
+//         background-color: #1c1c1c;
+//         border: none;
+//     }
 
-        .table-netflix th,
-        .table-netflix td {
-            border: 1px solid #333;
-            vertical-align: middle;
-        }
+//         .table-netflix th,
+//         .table-netflix td {
+//             border: 1px solid #333;
+//             vertical-align: middle;
+//         }
 
-        .table-netflix th {
-            background-color: #111;
-            color: #e50914;
-        }
+//         .table-netflix th {
+//             background-color: #111;
+//             color: #e50914;
+//         }
 
-        .table-netflix td {
-            color: #fff;
-        }
+//         .table-netflix td {
+//             color: #fff;
+//         }
 
-    /* Buttons */
-    .btn-outline-danger {
-        border-color: #e50914;
-        color: #e50914;
-    }
+//     /* Buttons */
+//     .btn-outline-danger {
+//         border-color: #e50914;
+//         color: #e50914;
+//     }
 
-        .btn-outline-danger:hover {
-            background-color: #e50914;
-            color: #111;
-        }
+//         .btn-outline-danger:hover {
+//             background-color: #e50914;
+//             color: #111;
+//         }
 
-    /* Search Input */
-    .search-input {
-        background-color: #222;
-        border: 1px solid #e50914;
-        color: #fff;
-    }
+//     /* Search Input */
+//     .search-input {
+//         background-color: #222;
+//         border: 1px solid #e50914;
+//         color: #fff;
+//     }
 
-        .search-input::placeholder {
-            color: #aaa;
-        }
-</style>
+//         .search-input::placeholder {
+//             color: #aaa;
+//         }
+// </style>

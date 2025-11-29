@@ -1,5 +1,9 @@
 ﻿@model List<SAKILA_WEBAPP_UI.Models.Staff>
 
+<a asp-controller="Home" asp-action="Index">
+    <img src="~/Images/srlogo.png" alt="Sakila Logo" style="height:90px;" />
+</a>
+
 @{
     ViewData["Title"] = "Staff";
     var currentSortColumn = ViewData["CurrentSortColumn"] as string ?? "firstName";
@@ -138,54 +142,54 @@
         }
     </tbody>
 </table>
-<style>
-    body {
-        background-color: #111;
-        color: #fff;
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
+// <style>
+//     body {
+//         background-color: #111;
+//         color: #fff;
+//         font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+//     }
 
-    h2 {
-        color: #e50914;
-        text-align: center;
-        margin-bottom: 20px;
-    }
+//     h2 {
+//         color: #e50914;
+//         text-align: center;
+//         margin-bottom: 20px;
+//     }
 
-    .table-netflix {
-        background-color: #1c1c1c;
-        border: 2px solid #fff;
-    }
+//     .table-netflix {
+//         background-color: #1c1c1c;
+//         border: 2px solid #fff;
+//     }
 
-        .table-netflix th, .table-netflix td {
-            border: 1px solid #fff;
-            text-align: center;
-            vertical-align: middle;
-            color: #fff;
-        }
+//         .table-netflix th, .table-netflix td {
+//             border: 1px solid #fff;
+//             text-align: center;
+//             vertical-align: middle;
+//             color: #fff;
+//         }
 
-        .table-netflix th {
-            background-color: #111;
-            color: #e50914;
-        }
+//         .table-netflix th {
+//             background-color: #111;
+//             color: #e50914;
+//         }
 
-    .search-input {
-        background-color: #222;
-        border: 1px solid #e50914;
-        color: #fff;
-    }
+//     .search-input {
+//         background-color: #222;
+//         border: 1px solid #e50914;
+//         color: #fff;
+//     }
 
-        .search-input::placeholder {
-            color: #aaa;
-        }
+//         .search-input::placeholder {
+//             color: #aaa;
+//         }
 
-    .btn-primary {
-        background-color: #e50914;
-        border-color: #e50914;
-        color: #fff;
-    }
+//     .btn-primary {
+//         background-color: #e50914;
+//         border-color: #e50914;
+//         color: #fff;
+//     }
 
-        .btn-primary:hover {
-            background-color: #fff;
-            color: #111;
-        }
-</style>
+//         .btn-primary:hover {
+//             background-color: #fff;
+//             color: #111;
+//         }
+// </style>

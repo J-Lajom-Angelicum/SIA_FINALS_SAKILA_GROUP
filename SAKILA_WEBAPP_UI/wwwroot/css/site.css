@@ -18,5 +18,55 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    background-color: #111;
+    color: #fff;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+
+h2 {
+    color: #e50914;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Netflix-style table */
+.table-netflix {
+    background-color: #1c1c1c;
+    border: 2px solid #fff;
+    width: 100%;
+}
+
+    .table-netflix th,
+    .table-netflix td {
+        border: 1px solid #fff;
+        text-align: center;
+        vertical-align: middle;
+        color: #fff;
+    }
+
+    .table-netflix th {
+        background-color: #111;
+        color: #e50914;
+    }
+
+/* Buttons */
+.btn-outline-danger {
+    border-color: #e50914;
+    color: #e50914;
+}
+
+    .btn-outline-danger:hover {
+        background-color: #e50914;
+        color: #111;
+    }
+
+/* Search Input */
+.search-input {
+    background-color: #222;
+    border: 1px solid #e50914;
+    color: #fff;
+}
+
+    .search-input::placeholder {
+        color: #aaa;
+    }

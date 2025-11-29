@@ -14,7 +14,7 @@ namespace SAKILA_WEBAPP_UI.Controllers
         }
 
         // GET: Customers
-        public async Task<IActionResult> Index(string searchTerm = "", string sortColumn = "firstName", string sortDirection = "asc", string searchColumn = "")
+        public async Task<IActionResult> Index(string searchTerm = "", string sortColumn = "firstName", string sortDirection = "asc")
         {
             // Bulk-load customers with full address, city, country
             var customers = await _apiService.GetCustomersWithFullAddressAsync();
@@ -24,7 +24,7 @@ namespace SAKILA_WEBAPP_UI.Controllers
             {
                 var lowerTerm = searchTerm.ToLower();
 
-                customers = searchColumn switch
+                customers = sortColumn switch
                 {
                     "firstName" => customers.Where(c => c.firstName?.ToLower().Contains(lowerTerm) ?? false).ToList(),
                     "lastName" => customers.Where(c => c.lastName?.ToLower().Contains(lowerTerm) ?? false).ToList(),
@@ -43,30 +43,11 @@ namespace SAKILA_WEBAPP_UI.Controllers
                 };
             }
 
-            // Sort (keep as is)
-            customers = sortColumn switch
-            {
-                "firstName" => sortDirection == "asc"
-                    ? customers.OrderBy(c => c.firstName).ToList()
-                    : customers.OrderByDescending(c => c.firstName).ToList(),
-                "lastName" => sortDirection == "asc"
-                    ? customers.OrderBy(c => c.lastName).ToList()
-                    : customers.OrderByDescending(c => c.lastName).ToList(),
-                "email" => sortDirection == "asc"
-                    ? customers.OrderBy(c => c.email).ToList()
-                    : customers.OrderByDescending(c => c.email).ToList(),
-                "active" => sortDirection == "asc"
-                    ? customers.OrderBy(c => c.active == "1").ToList()
-                    : customers.OrderByDescending(c => c.active == "1").ToList(),
-                _ => customers
-            };
 
             // Store filter & sort info for UI
             ViewData["CurrentFilter"] = searchTerm;
             ViewData["CurrentSortColumn"] = sortColumn;
             ViewData["CurrentSortDirection"] = sortDirection;
-            ViewData["CurrentSearchColumn"] = searchColumn; // save selected search column
-
             return View(customers);
         }
 
