@@ -13,32 +13,41 @@ namespace SAKILA_WEBAPP_UI.Services
             _client = clientFactory.CreateClient("SakilaAPI");
         }
 
-        // Generic GET list
+        #region Generic GET helpers
         private async Task<List<T>> GetListAsync<T>(string endpoint)
         {
             var response = await _client.GetAsync(endpoint);
             if (!response.IsSuccessStatusCode) return new List<T>();
 
             var json = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<List<T>>(json) ?? new List<T>();
+            return JsonSerializer.Deserialize<List<T>>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.AllowReadingFromString
+            }) ?? new List<T>();
         }
 
-        // Generic GET single item
         private async Task<T?> GetSingleAsync<T>(string endpoint)
         {
             var response = await _client.GetAsync(endpoint);
             if (!response.IsSuccessStatusCode) return default;
 
             var json = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<T>(json);
+            return JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.AllowReadingFromString
+            });
         }
+        #endregion
 
-        // --- CRUD Operations ---
+        #region CRUD operations
         public async Task<bool> PostAsync<T>(string endpoint, T data) => (await _client.PostAsJsonAsync(endpoint, data)).IsSuccessStatusCode;
         public async Task<bool> PutAsync<T>(string endpoint, T data) => (await _client.PutAsJsonAsync(endpoint, data)).IsSuccessStatusCode;
         public async Task<bool> DeleteAsync(string endpoint) => (await _client.DeleteAsync(endpoint)).IsSuccessStatusCode;
+        #endregion
 
-        // --- Film + Related data ---
+        #region Films
         public Task<List<Film>> GetFilmsAsync() => GetListAsync<Film>("api/Films");
         public Task<Film?> GetFilmAsync(int id) => GetSingleAsync<Film>($"api/Films/{id}");
         public Task<List<Inventory>> GetInventoriesAsync() => GetListAsync<Inventory>("api/Inventory");
@@ -48,30 +57,7 @@ namespace SAKILA_WEBAPP_UI.Services
         public Task<List<FilmActor>> GetFilmActorsAsync() => GetListAsync<FilmActor>("api/FilmActors");
         public Task<List<Category>> GetCategoriesAsync() => GetListAsync<Category>("api/Categories");
         public Task<List<FilmCategory>> GetFilmCategoriesAsync() => GetListAsync<FilmCategory>("api/FilmCategories");
-
-        // --- Rental helper methods ---
-
-        // Rentals
-        public Task<Rental?> GetRentalByIdAsync(int rentalId) =>
-            GetSingleAsync<Rental>($"api/Rentals/{rentalId}");
-
-        // Film via InventoryId
-        public async Task<Film?> GetFilmByInventoryIdAsync(int inventoryId)
-        {
-            var inventories = await GetInventoriesAsync();
-            var inventory = inventories.FirstOrDefault(i => i.inventoryId == inventoryId);
-            if (inventory == null) return null;
-            return await GetFilmAsync(inventory.filmId);
-        }
-
-        // Get all customers
-        public Task<List<Customer>> GetCustomersAsync() => GetListAsync<Customer>("api/Customers");
-
-        // Get all staff
-        public Task<List<Staff>> GetStaffAsync() => GetListAsync<Staff>("api/Staff");
-
-
-        // --- Compute TotalCopies and AvailableCopies ---
+        // Compute TotalCopies and AvailableCopies for each film
         public async Task<List<Film>> GetFilmsWithAvailabilityAsync()
         {
             var films = await GetFilmsAsync();
@@ -82,13 +68,21 @@ namespace SAKILA_WEBAPP_UI.Services
             {
                 var filmInventories = inventories.Where(i => i.filmId == film.filmId).ToList();
                 film.TotalCopies = filmInventories.Count;
-                film.AvailableCopies = filmInventories.Count(i => !rentals.Any(r => r.inventoryId == i.inventoryId && r.returnDate == null));
+                film.AvailableCopies = filmInventories.Count(i =>
+                    !rentals.Any(r => r.inventoryId == i.inventoryId && r.returnDate == null)
+                );
             }
 
             return films;
         }
 
-        // --- Full helper: Merge Language, Actors, Categories, Availability ---
+        public async Task<Film?> GetFilmByInventoryIdAsync(int inventoryId)
+        {
+            var inventories = await GetInventoriesAsync();
+            var inventory = inventories.FirstOrDefault(i => i.inventoryId == inventoryId);
+            if (inventory == null) return null;
+            return await GetFilmAsync(inventory.filmId);
+        }
         public async Task<List<Film>> GetFilmsWithDetailsAsync()
         {
             var films = await GetFilmsWithAvailabilityAsync();
@@ -130,45 +124,77 @@ namespace SAKILA_WEBAPP_UI.Services
 
             return films;
         }
+        #endregion
 
-        // --- Merge Rentals with Film, Customer, and Staff info ---
-        public async Task<List<Rental>> GetRentalsWithDetailsAsync()
+        #region Rentals
+        public Task<Rental?> GetRentalByIdAsync(int rentalId) => GetSingleAsync<Rental>($"api/Rentals/{rentalId}");
+        // Basic list of customers
+        public Task<List<Customer>> GetCustomersAsync() => GetListAsync<Customer>("api/Customers");
+
+        public async Task<List<Rental>> GetRentalsWithFilmDetailsAsync()
         {
-            // 1. Get base data
             var rentals = await GetRentalsAsync();
             var inventories = await GetInventoriesAsync();
             var films = await GetFilmsAsync();
             var customers = await GetCustomersAsync();
             var staffMembers = await GetStaffAsync();
 
-            // 2. Merge data
             foreach (var rental in rentals)
             {
-                // Film via inventory
                 var inventory = inventories.FirstOrDefault(i => i.inventoryId == rental.inventoryId);
-                var film = inventory != null ? films.FirstOrDefault(f => f.filmId == inventory.filmId) : null;
-
-                if (film != null)
+                if (inventory != null)
                 {
-                    rental.title = film.title;
-                    rental.rentalDuration = film.rentalDuration;
-                    rental.rentalRate = film.rentalRate;
-                    rental.replacementCost = film.replacementCost;
+                    var film = films.FirstOrDefault(f => f.filmId == inventory.filmId);
+                    if (film != null)
+                    {
+                        rental.Title = film.title;
+                        rental.RentalDuration = film.rentalDuration;
+                        rental.RentalRate = film.rentalRate;
+                        rental.ReplacementCost = film.replacementCost;
+                    }
                 }
 
-                // Customer full name
                 var customer = customers.FirstOrDefault(c => c.customerId == rental.customerId);
                 rental.customerName = customer != null ? $"{customer.firstName} {customer.lastName}" : "-";
 
-                // Staff full name
                 var staff = staffMembers.FirstOrDefault(s => s.staffId == rental.staffId);
                 rental.staffName = staff != null ? $"{staff.firstName} {staff.lastName}" : "-";
             }
 
             return rentals;
         }
+        #endregion
 
+        #region Customers + Addresses + Cities + Countries
 
+        // Bulk-load customers with full address info
+        public async Task<List<Customer>> GetCustomersWithFullAddressAsync()
+        {
+            var customers = await GetListAsync<Customer>("api/Customers");
+            var addresses = await GetListAsync<Address>("api/Addresses");
+            var cities = await GetListAsync<City>("api/Cities");
+            var countries = await GetListAsync<Country>("api/Countries");
 
+            foreach (var c in customers)
+            {
+                c.Address = addresses.FirstOrDefault(a => a.addressId == c.addressId);
+                if (c.Address != null)
+                {
+                    c.Address.City = cities.FirstOrDefault(ci => ci.cityId == c.Address.cityId);
+                    if (c.Address.City != null)
+                    {
+                        c.Address.City.Country = countries.FirstOrDefault(co => co.countryId == c.Address.City.countryId);
+                    }
+                }
+            }
+
+            return customers;
+        }
+
+        #endregion
+
+        #region Staff
+        public Task<List<Staff>> GetStaffAsync() => GetListAsync<Staff>("api/Staff");
+        #endregion
     }
 }

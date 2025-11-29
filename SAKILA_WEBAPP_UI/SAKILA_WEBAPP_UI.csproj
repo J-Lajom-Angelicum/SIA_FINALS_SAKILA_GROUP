@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Views\Inventory\" />
-    <Folder Include="Views\Customer\" />
     <Folder Include="Views\Payment\" />
     <Folder Include="Views\Staff\" />
   </ItemGroup>

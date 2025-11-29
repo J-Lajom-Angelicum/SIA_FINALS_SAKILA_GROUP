@@ -33,10 +33,10 @@ namespace SAKILA_WEBAPP_UI.Controllers
 
                 if (film != null)
                 {
-                    rental.title = film.title;
-                    rental.rentalDuration = film.rentalDuration;
-                    rental.rentalRate = film.rentalRate;
-                    rental.replacementCost = film.replacementCost;
+                    rental.Title = film.title;
+                    rental.RentalDuration = film.rentalDuration;
+                    rental.RentalRate = film.rentalRate;
+                    rental.ReplacementCost = film.replacementCost;
                 }
 
                 // Customer Name
@@ -53,7 +53,7 @@ namespace SAKILA_WEBAPP_UI.Controllers
             {
                 searchTerm = searchTerm.ToLower();
                 rentals = rentals.Where(r =>
-                    (!string.IsNullOrEmpty(r.title) && r.title.ToLower().Contains(searchTerm)) ||
+                    (!string.IsNullOrEmpty(r.Title) && r.Title.ToLower().Contains(searchTerm)) ||
                     (!string.IsNullOrEmpty(r.customerName) && r.customerName.ToLower().Contains(searchTerm))
                 ).ToList();
             }
@@ -61,8 +61,8 @@ namespace SAKILA_WEBAPP_UI.Controllers
             // 5. Sort
             rentals = sortColumn switch
             {
-                "filmTitle" => sortDirection == "asc" ? rentals.OrderBy(r => r.title).ToList() : rentals.OrderByDescending(r => r.title).ToList(),
-                "rentalRate" => sortDirection == "asc" ? rentals.OrderBy(r => r.rentalRate).ToList() : rentals.OrderByDescending(r => r.rentalRate).ToList(),
+                "filmTitle" => sortDirection == "asc" ? rentals.OrderBy(r => r.Title).ToList() : rentals.OrderByDescending(r => r.Title).ToList(),
+                "rentalRate" => sortDirection == "asc" ? rentals.OrderBy(r => r.RentalRate).ToList() : rentals.OrderByDescending(r => r.RentalRate).ToList(),
                 "rentalDate" => sortDirection == "asc" ? rentals.OrderBy(r => r.rentalDate).ToList() : rentals.OrderByDescending(r => r.rentalDate).ToList(),
                 _ => rentals
             };

@@ -9,7 +9,9 @@ namespace SAKILA_WEBAPP_UI.Models
         public string lastName { get; set; }
         public string email { get; set; }
         public string active { get; set; }
-        public string addressId { get; set; }
-        public string storeId { get; set; }
+        public int addressId { get; set; }
+        public int storeId { get; set; }
+
+        public Address Address { get; set; }
     }
 }

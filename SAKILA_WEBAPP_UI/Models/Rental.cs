@@ -10,10 +10,10 @@ namespace SAKILA_WEBAPP_UI.Models
         public int staffId { get; set; }
 
         [JsonPropertyName("title")]
-        public string title { get; set; }
-        public byte rentalDuration { get; set; }
-        public decimal rentalRate { get; set; }
-        public decimal replacementCost { get; set; }
+        public string Title { get; set; }
+        public byte RentalDuration { get; set; }
+        public decimal RentalRate { get; set; }
+        public decimal ReplacementCost { get; set; }
 
         public string customerName { get; set; }
         public string staffName { get; set; }

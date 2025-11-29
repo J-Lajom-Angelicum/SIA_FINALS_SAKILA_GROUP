@@ -46,10 +46,10 @@
         @foreach (var rental in Model)
         {
             <tr>
-                <td>@rental.title</td>
-                <td>@rental.rentalDuration</td>
-                <td>@rental.rentalRate.ToString("C")</td>
-                <td>@rental.replacementCost.ToString("C")</td>
+                <td>@rental.Title</td>
+                <td>@rental.RentalDuration</td>
+                <td>@rental.RentalRate.ToString("C")</td>
+                <td>@rental.ReplacementCost.ToString("C")</td>
                 <td>@rental.rentalDate.ToString("yyyy-MM-dd")</td>
                 <td>@rental.returnDate?.ToString("yyyy-MM-dd")</td>
                 <td>@rental.customerName</td>
